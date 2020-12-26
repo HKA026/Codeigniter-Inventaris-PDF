@@ -1,6 +1,6 @@
 				**************************************************************************************************
 				*	Author : Hafid Khoeri Abdillah 								 *
-				*	Profile: Http://github.com/HafidKhoeriAbdillah							 *
+				*	Profile: https://github.com/HKA026/							 *
 				*												 *
 				*				##################################				 *
 				*				# Aplikasi Inventaris Peminjaman #				 *
