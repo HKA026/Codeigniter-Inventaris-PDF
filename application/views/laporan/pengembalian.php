@@ -1,0 +1,119 @@
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-check"></i> LAPORAN PEMINJAMAN
+            </div>
+            <div class="panel-body">
+               <br />
+               <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2">Tanggal Awal</label>
+                        <div class="col-lg-5">
+                            <input type="text" id="tanggal1" class="form-control">
+                        </div>
+                    </div> 
+
+                    <div class="form-group">
+                        <label class="col-lg-2">Tanggal Akhir</label>
+                        <div class="col-lg-5">
+                            <input type="text" id="tanggal2" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+                            <button id="tampilkan" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Tampilkan</button>
+                        </div>
+                    </div>    
+               
+               </div><br />
+               
+                <form target="_blank" action="<?=base_url('DataPengembalian/CetakPDF')?>" method='post'>
+                
+                <button id="cetak" type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Cetak</button>
+                <br><br> 
+               <div id="tampil"></div>
+               </form>
+            
+            </div> <!-- end panel body -->
+        
+        </div><!-- end panel -->
+
+    </div> <!-- end lg -->
+</div> <!-- end row -->
+
+
+<script>
+$(document).ready(function() {
+
+    //alert('');
+
+    //load datatable
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
+
+    $('#cetak').hide();
+
+
+    //datepicker
+    $("#tanggal1").datepicker({
+        format:'yyyy-mm-dd'
+    });
+    
+    $("#tanggal2").datepicker({
+        format:'yyyy-mm-dd'
+    });
+    
+    $("#tanggal").datepicker({
+        format:'yyyy-mm-dd'
+    });
+
+
+    //get data via ajax 
+    $("#tampilkan").click(function(){
+
+        var tanggal1 = $("#tanggal1").val();
+        var tanggal2 = $("#tanggal2").val();
+
+        
+
+        if(tanggal1 == "") {
+            alert("Silahkan isi periode tanggal awal")
+            $("#tanggal1").focus();
+            return false;
+        }
+        else if(tanggal2 == ""){
+            alert("Silahkan isi periode tanggal akhir")
+            $("#tanggal2").focus();
+            return false;
+        }
+        else{
+
+
+            $.ajax({
+                url:"<?php echo site_url('DataPengembalian/cari_pengembalian');?>",
+                type:"POST",
+                data:"tanggal1="+tanggal1+"&tanggal2="+tanggal2,
+                cache:false,
+                success:function(hasil){
+                    // console.log(hasil);
+                    $("#tampil").html(hasil);
+                     $('#cetak').show();
+                }
+            })
+
+            //  $('#loader').html("").hide();
+
+        }
+
+        
+
+    }) //end #tampilkan
+    
+
+}); //end document
+</script>
+
+
+
